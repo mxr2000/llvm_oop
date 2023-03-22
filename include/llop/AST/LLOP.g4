@@ -4,14 +4,14 @@ program: (classDecl | staticDecl | interfaceDecl)*
 ;
 
 
-classDecl: CLASS'(' IDENTIFIER ')' '[' IDENTIFIER* ']'
+classDecl: CLASS IDENTIFIER '(' IDENTIFIER ')' '[' IDENTIFIER* ']'
 BEGIN
     (fieldDecl)*
     (funcDecl)*
 END
 ;
 
-staticDecl: STATIC
+staticDecl: STATIC IDENTIFIER
 BEGIN
     (fieldDecl)*
     (funcDecl)*
@@ -51,7 +51,7 @@ expr: expr argumentList 	#funCallExpr
     | expr op=(EQ | NE) expr 			#equalityExpr
     | IDENTIFIER				#varExpr
     | NUMBER					#numExpr
-    | NEW IDENTIFIER argumentList #newExpr
+    | NEW type argumentList #newExpr
     | NULL #nullExpr
     | '(' expr ')'				#parenExpr
 ;

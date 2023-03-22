@@ -22,6 +22,11 @@ public:
      * @return
      */
     std::pair<int, void*> getField(std::string name);
+
+
+    void* getStruct();
+
+    void* getInterfaceIndexes(std::string name)
 };
 
 
