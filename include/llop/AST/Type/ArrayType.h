@@ -4,9 +4,16 @@
 
 #ifndef LLVM_OOP_ARRAYTYPE_H
 #define LLVM_OOP_ARRAYTYPE_H
-#include "Type.h"
-class ArrayType : public Type {
 
+#include "ReferenceType.h"
+
+class ArrayType : public ReferenceType {
+private:
+    Type *subType;
+public:
+    explicit ArrayType(Type *subType) : subType(subType) {}
+
+    Type *getSubType() { return subType; }
 };
 
 #endif //LLVM_OOP_ARRAYTYPE_H

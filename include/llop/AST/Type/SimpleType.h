@@ -4,10 +4,17 @@
 
 #ifndef LLVM_OOP_SIMPLETYPE_H
 #define LLVM_OOP_SIMPLETYPE_H
-#include "Type.h"
+
+#include "ReferenceType.h"
 #include <string>
-class SimpleType : public Type {
+
+class SimpleType : public ReferenceType {
 private:
     std::string name;
+public:
+    explicit SimpleType(std::string name) : name(name) {}
+
+    std::string getName() { return name; }
 };
+
 #endif //LLVM_OOP_SIMPLETYPE_H

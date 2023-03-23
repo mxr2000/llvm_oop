@@ -6,9 +6,15 @@
 #define LLVM_OOP_PARAM_H
 
 #include "../Node.h"
+#include <string>
+#include "../Type/Type.h"
 
 class Param : public Node {
-
+private:
+    std::string name;
+    Type *type;
+public:
+    Param(std::string name, Type *type) : name(name), type(type) {}
 };
 
 #endif //LLVM_OOP_PARAM_H

@@ -9,5 +9,8 @@
 class NumberExpr : public Expr {
 private:
     int val;
+public:
+    explicit NumberExpr(int val) : val(val) {}
+    int getVal() { return val; }
 };
 #endif //LLVM_OOP_NUMBEREXPR_H

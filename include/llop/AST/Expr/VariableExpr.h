@@ -10,6 +10,11 @@
 class VariableExpr : public Expr {
 private:
     std::string name;
+
+public:
+    explicit VariableExpr(std::string name) : name(std::move(name)) {}
+
+    std::string getName() { return name; }
 };
 
 #endif //LLVM_OOP_VARIABLEEXPR_H

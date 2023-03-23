@@ -10,6 +10,10 @@
 class ParenExpr : public Expr {
 private:
     Expr *expr;
+public:
+    explicit ParenExpr(Expr *expr) : expr(expr) {}
+
+    Expr *getExpr() { return expr; }
 };
 
 #endif //LLVM_OOP_PARENEXPR_H

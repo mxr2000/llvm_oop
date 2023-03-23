@@ -42,18 +42,19 @@ stmt: blockStatement
     | returnStatement
 ;
 
-expr: expr argumentList 	#funCallExpr
-    | expr '.' IDENTIFIER 			#accessExpr
-    | SUB expr #negExpr
+expr: IDENTIFIER argumentList   	#funCallExpr
+    | expr '.' expr 			#accessExpr
+    | SUB expr                      #negExpr
     | expr op=(MUL | DIV) expr 		#multiplicativeExpr
     | expr op=(ADD | SUB) expr 		#additiveExpr
-    | expr op=GT expr 				#relationalExpr
-    | expr op=(EQ | NE) expr 			#equalityExpr
-    | IDENTIFIER				#varExpr
-    | NUMBER					#numExpr
-    | NEW type argumentList #newExpr
-    | NULL #nullExpr
-    | '(' expr ')'				#parenExpr
+    | expr op=(EQ | NE | GT) expr 	#relationalExpr
+    | expr op= expr 		        #equalityExpr
+    | expr '[' expr ']'             #arrayRefExpr
+    | IDENTIFIER				    #varExpr
+    | NUMBER					    #numExpr
+    | NEW type argumentList         #newExpr
+    | NULL                          #nullExpr
+    | '(' expr ')'				    #parenExpr
 ;
 
 blockStatement: BEGIN (stmt)* END
@@ -83,9 +84,18 @@ assignStatement: expr '=' expr
 variableDeclStatement: VAR IDENTIFIER ':' type
 ;
 
-type: IDENTIFIER #simpleType
-    | ARRAY '<' type '>' #arrayType
+type: valueType | referenceType
 ;
+
+valueType : INT
+;
+
+referenceType :
+    IDENTIFIER #simpleType
+    | ARRAY '<' referenceType '>' #arrayType
+;
+
+
 
 
 MUL : '*' ;
@@ -118,6 +128,7 @@ ARRAY: 'ARRAY';
 
 RETURN: 'RETURN' ;
 VAR: 'VAR' ;
+INT: 'INT' ;
 
 IDENTIFIER : [a-zA-Z_][a-zA-Z0-9_]* ;
 

@@ -12,6 +12,14 @@ class BinaryExpr : public Expr {
 private:
     Expr *lhs, *rhs;
     BinaryOp op;
+public:
+    BinaryExpr(Expr *lhs, Expr *rhs, BinaryOp op) : lhs(lhs), rhs(rhs), op(op) {}
+
+    Expr *getRhs() { return rhs; }
+
+    Expr *getLhs() { return lhs; }
+
+    BinaryOp getBinaryOperation() { return op; }
 };
 
 #endif //LLVM_OOP_BINARYEXPR_H

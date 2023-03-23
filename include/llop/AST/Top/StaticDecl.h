@@ -8,9 +8,11 @@
 #include "../Node.h"
 #include "FuncDecl.h"
 #include <vector>
+#include <string>
 
 class StaticDecl : public Node {
 private:
+    std::string name;
     std::vector<FuncDecl*> methods;
 };
 

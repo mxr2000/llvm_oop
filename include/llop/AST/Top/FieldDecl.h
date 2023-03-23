@@ -13,6 +13,13 @@ class FieldDecl : public Node {
 private:
     Type *type;
     std::string name;
+
+public:
+    FieldDecl(std::string name, Type *type) : name(name), type(type) {}
+
+    std::string getName() { return name; }
+
+    Type *getType() { return type; }
 };
 
 #endif //LLVM_OOP_FIELDDECL_H

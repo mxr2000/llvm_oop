@@ -8,6 +8,7 @@
 #include "../Node.h"
 
 class Type : public Node {
-
+public:
+    virtual bool isPointerType() = 0;
 };
 #endif //LLVM_OOP_TYPE_H
