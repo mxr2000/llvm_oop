@@ -19,6 +19,7 @@
 #include "Expr/UnaryExpr.h"
 #include "Expr/NullExpr.h"
 #include "Expr/AccessExpr.h"
+#include "Expr/TypeCoercionExpr.h"
 
 #include "Stmt/Stmt.h"
 #include "Stmt/IfStmt.h"

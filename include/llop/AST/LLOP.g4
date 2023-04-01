@@ -1,13 +1,12 @@
 grammar LLOP;
 
-program: (classDecl | staticDecl | interfaceDecl)*
+program: (classDecl | staticDecl | interfaceDecl)+
 ;
 
 
-classDecl: CLASS IDENTIFIER '(' IDENTIFIER ')' '[' IDENTIFIER* ']'
+classDecl: 'CLASS' IDENTIFIER '(' IDENTIFIER ')' '[' (IDENTIFIER)* ']'
 BEGIN
-    (fieldDecl)*
-    (funcDecl)*
+    (fieldDecl | funcDecl)*
 END
 ;
 
@@ -18,7 +17,7 @@ BEGIN
 END
 ;
 
-interfaceDecl: INTERFACE
+interfaceDecl: INTERFACE IDENTIFIER ('(' IDENTIFIER ')')?
 BEGIN
     (funcHeader)*
 END
@@ -43,13 +42,13 @@ stmt: blockStatement
 ;
 
 expr: IDENTIFIER argumentList   	#funCallExpr
-    | expr '.' expr 			#accessExpr
+    | expr'.' '[' referenceType ']' #typeCoercionExpr
+    | expr '.' expr 			    #accessExpr
     | SUB expr                      #negExpr
     | expr op=(MUL | DIV) expr 		#multiplicativeExpr
     | expr op=(ADD | SUB) expr 		#additiveExpr
     | expr op=(EQ | NE | GT) expr 	#relationalExpr
     | expr op= expr 		        #equalityExpr
-    | expr '[' expr ']'             #arrayRefExpr
     | IDENTIFIER				    #varExpr
     | NUMBER					    #numExpr
     | NEW type argumentList         #newExpr
@@ -60,7 +59,7 @@ expr: IDENTIFIER argumentList   	#funCallExpr
 blockStatement: BEGIN (stmt)* END
 ;
 
-ifStatement: IF '(' expr ')' THEN stmt (ELSE stmt)
+ifStatement: IF '(' expr ')' THEN stmt (ELSE stmt)?
 ;
 
 whileStatement: WHILE '(' expr ')' stmt
@@ -92,7 +91,7 @@ valueType : INT
 
 referenceType :
     IDENTIFIER #simpleType
-    | ARRAY '<' referenceType '>' #arrayType
+    // | ARRAY '<' referenceType '>' #arrayType
 ;
 
 
@@ -111,7 +110,7 @@ NUMBER : [0-9]+ ;
 NEW: 'NEW' ;
 BEGIN : 'BEGIN' ;
 END   : 'END' ;
-CLSSS : 'CLASS' ;
+CLSSS : 'class' ;
 INTERFACE: 'INTERFACE' ;
 STATIC: 'STATIC';
 FIELD: 'FIELD';
