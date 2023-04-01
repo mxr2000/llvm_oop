@@ -13,6 +13,15 @@ private:
     Expr *Condition;
     Stmt *thenStmt;
     Stmt *elseStmt;
+public:
+    IfStmt(Expr *Condition, Stmt *thenStmt, Stmt *elseStmt) : Condition(Condition), thenStmt(thenStmt),
+                                                              elseStmt(elseStmt) {}
+
+    Expr *getCondition() { return Condition; }
+
+    Stmt *getThenStmt() { return thenStmt; }
+
+    Stmt *getElseStmt() { return elseStmt; }
 };
 
 #endif //LLVM_OOP_IFSTMT_H
