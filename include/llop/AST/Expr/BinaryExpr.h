@@ -15,11 +15,13 @@ private:
 public:
     BinaryExpr(Expr *lhs, Expr *rhs, BinaryOp op) : lhs(lhs), rhs(rhs), op(op) {}
 
-    Expr *getRhs() { return rhs; }
+    Expr *Rhs() { return rhs; }
 
-    Expr *getLhs() { return lhs; }
+    Expr *Lhs() { return lhs; }
 
-    BinaryOp getBinaryOperation() { return op; }
+    BinaryOp BinaryOperation() { return op; }
+
+    GenValue *codegen(Context* ctx) override;
 };
 
 #endif //LLVM_OOP_BINARYEXPR_H

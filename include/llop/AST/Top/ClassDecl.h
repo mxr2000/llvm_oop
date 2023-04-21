@@ -9,8 +9,11 @@
 #include "FieldDecl.h"
 #include "FuncDecl.h"
 #include "InterfaceDecl.h"
+#include "../Type/ReferenceType.h"
+#include <utility>
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 class ClassDecl : public Node {
 private:
@@ -19,16 +22,46 @@ private:
     std::vector<InterfaceDecl *> implementedInterfaces;
     std::vector<FieldDecl *> fields;
     std::vector<FuncDecl *> methods;
+
+    std::unordered_map<std::string, int> interfaceOffsetMap;
+
+    void generateInterfaceOffsetMap();
+
+    void buildFields(const std::vector<FieldDecl *> &newFields);
+
+    void buildMethods(const std::vector<FuncDecl *> &newMethods);
+
+    unsigned long getNewInterfaceMethodsSize();
+
 public:
-    ClassDecl(std::string name) : name(std::move(name)) {}
+    ClassDecl(std::string name,
+              ClassDecl *parent,
+              std::vector<InterfaceDecl *> implementedInterfaces,
+              const std::vector<FieldDecl *> &newFields,
+              const std::vector<FuncDecl *> &newMethods) :
+            name(std::move(name)),
+            parent(parent),
+            implementedInterfaces(std::move(implementedInterfaces)) {
+        generateInterfaceOffsetMap();
+        buildFields(newFields);
+        buildMethods(newMethods);
+    }
 
-    void setFields(std::vector<FieldDecl *> fields) { this->fields = fields; }
+    GenValue *codegen(Context *ctx) override;
 
-    void setMethods(std::vector<FuncDecl *> methods) { this->methods = methods; }
+    std::pair<int, Type *> getFieldIndex(const std::string &name);
 
-    void setParent(ClassDecl *parent) { this->parent = parent; }
+    std::vector<FuncDecl *> &Methods() { return methods; }
 
-    void setImplementedInterfaces(std::vector<InterfaceDecl *> interfaces) { this->implementedInterfaces = interfaces; }
+    std::vector<FieldDecl *> &Fields() { return fields; }
+
+    std::string Name() { return name; }
+
+    Type *Type() { return new ReferenceType(Name()); }
+
+    ClassDecl *Parent() { return parent; }
+
+    int getInterfaceOffset(const std::string& name);
 };
 
 #endif //LLVM_OOP_CLASSDECL_H

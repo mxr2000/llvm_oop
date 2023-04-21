@@ -10,15 +10,16 @@
 
 class AccessExpr : public Expr {
 private:
-    std::string name;
-    Expr *rhs;
+    Expr *lhs, *rhs;
 
 public:
-    AccessExpr(std::string name, Expr *rhs) : name(std::move(name)), rhs(rhs) {}
+    AccessExpr(Expr *lhs, Expr *rhs) : lhs(lhs), rhs(rhs) {}
 
-    std::string getName() { return name; }
+    Expr *Lhs() { return lhs; }
 
-    Expr *getRhs() { return rhs; }
+    Expr *Rhs() { return rhs; }
+
+    GenValue * codegen(Context* ctx) override;
 };
 
 #endif //LLVM_OOP_ACCESSEXPR_H

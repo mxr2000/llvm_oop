@@ -13,13 +13,18 @@ class FuncCallExpr : public Expr {
 private:
     std::string name;
     std::vector<Expr *> arguments;
+
+    GenValue* generateClassMethodCall(Context* ctx, std::vector<GenValue*>& genArgs);
+    GenValue* generateStaticMethodCall(Context* ctx, std::vector<GenValue*>& genArgs);
 public:
     FuncCallExpr(std::string name, std::vector<Expr *> arguments) : name(std::move(name)),
                                                                     arguments(std::move(arguments)) {}
 
-    std::string getName() { return name; }
+    std::string Name() { return name; }
 
-    std::vector<Expr *> getArguments() { return arguments; }
+    std::vector<Expr *> Arguments() { return arguments; }
+
+    GenValue * codegen(Context* ctx) override;
 };
 
 #endif //LLVM_OOP_FUNCCALLEXPR_H

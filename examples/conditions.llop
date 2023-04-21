@@ -1,0 +1,36 @@
+STATIC Program
+BEGIN
+    FUNC main() -> Void
+    BEGIN
+        VAR a: Int
+        VAR b: Int
+        VAR c: Int
+
+        IF (a > b) THEN
+        BEGIN END
+
+        IF (a < b) THEN
+        BEGIN END
+
+        IF (a >= b) THEN
+        BEGIN END
+
+        IF (a <= b) THEN
+        BEGIN END
+
+        IF (a == b) THEN
+        BEGIN END
+
+        IF (a != b) THEN
+        BEGIN END
+
+        IF (a == b AND a == c) THEN
+        BEGIN END
+
+        IF (a == b OR a == c) THEN
+        BEGIN END
+
+        IF (NOT a == c) THEN
+        BEGIN END
+    END
+END

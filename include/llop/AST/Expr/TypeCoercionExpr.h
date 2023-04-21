@@ -8,17 +8,19 @@
 #include "./Expr.h"
 #include "../Type/SimpleType.h"
 
-class TypeCoercionExpr : Expr {
+class TypeCoercionExpr : public Expr {
 private:
     Expr *expr;
-    SimpleType *type;
+    ReferenceType *type;
 
 public:
-    TypeCoercionExpr(Expr *expr, SimpleType *type) : expr(expr), type(type) {}
+    TypeCoercionExpr(Expr *expr, ReferenceType *type) : expr(expr), type(type) {}
 
     Expr *getExpr() { return expr; }
 
-    SimpleType *getType() { return type; }
+    ReferenceType *getType() { return type; }
+
+    GenValue * codegen(Context* ctx) override;
 };
 
 

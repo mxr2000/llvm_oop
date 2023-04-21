@@ -7,12 +7,21 @@
 
 #include "Stmt.h"
 #include <string>
+#include <utility>
 #include "../Type/Type.h"
 
 class VariableDeclStmt : public Stmt {
 private:
     std::string name;
     Type *type;
+public:
+    VariableDeclStmt(std::string name, Type *type) : name(std::move(name)), type(type) {}
+
+    std::string Name() { return name; }
+
+    Type *Type() { return type; }
+
+    GenValue * codegen(Context *ctx) override;
 };
 
 #endif //LLVM_OOP_VARIABLEDECLSTMT_H

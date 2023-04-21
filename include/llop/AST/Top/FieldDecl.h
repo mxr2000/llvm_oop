@@ -8,6 +8,7 @@
 #include "../Node.h"
 #include "../Type/Type.h"
 #include <string>
+#include <utility>
 
 class FieldDecl : public Node {
 private:
@@ -15,11 +16,14 @@ private:
     std::string name;
 
 public:
-    FieldDecl(std::string name, Type *type) : name(name), type(type) {}
+    FieldDecl(std::string name, Type *type) : name(std::move(name)), type(type) {}
 
-    std::string getName() { return name; }
+    std::string Name() { return name; }
 
-    Type *getType() { return type; }
+    Type *Type() { return type; }
+
+    GenValue *codegen(Context *ctx) override { return nullptr; }
+
 };
 
 #endif //LLVM_OOP_FIELDDECL_H

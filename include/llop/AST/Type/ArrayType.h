@@ -11,7 +11,7 @@ class ArrayType : public ReferenceType {
 private:
     Type *subType;
 public:
-    explicit ArrayType(Type *subType) : subType(subType) {}
+    explicit ArrayType(Type *subType) : ReferenceType(""), subType(subType) {}
 
     Type *getSubType() { return subType; }
 };

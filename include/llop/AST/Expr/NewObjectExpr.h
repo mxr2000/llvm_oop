@@ -6,13 +6,18 @@
 #define LLVM_OOP_NEWOBJECTEXPR_H
 
 #include "Expr.h"
-#include "../Type/Type.h"
+#include "../Type/ReferenceType.h"
+#include <utility>
 #include <vector>
 
 class NewObjectExpr : public Expr {
 private:
-    Type *type;
-    std::vector<Expr*> arguments;
+    ReferenceType *type;
+    std::vector<Expr *> arguments;
+public:
+    GenValue *codegen(Context* ctx) override;
+
+    NewObjectExpr(ReferenceType *type, std::vector<Expr *> arguments) : type(type), arguments(std::move(arguments)) {}
 };
 
 #endif //LLVM_OOP_NEWOBJECTEXPR_H

@@ -17,7 +17,7 @@ BEGIN
 END
 ;
 
-interfaceDecl: INTERFACE IDENTIFIER ('(' IDENTIFIER ')')?
+interfaceDecl: INTERFACE IDENTIFIER // ('(' IDENTIFIER ')')? not time to implement this
 BEGIN
     (funcHeader)*
 END
@@ -39,21 +39,32 @@ stmt: blockStatement
     | assignStatement
     | variableDeclStatement
     | returnStatement
+    | outputStatement
+    | expr
 ;
 
-expr: IDENTIFIER argumentList   	#funCallExpr
+expr: referenceType '::' expr       #staticAccessExpr
+    | IDENTIFIER argumentList   	#funCallExpr
     | expr'.' '[' referenceType ']' #typeCoercionExpr
     | expr '.' expr 			    #accessExpr
     | SUB expr                      #negExpr
     | expr op=(MUL | DIV) expr 		#multiplicativeExpr
     | expr op=(ADD | SUB) expr 		#additiveExpr
-    | expr op=(EQ | NE | GT) expr 	#relationalExpr
-    | expr op= expr 		        #equalityExpr
+    | expr op=(EQ | NE | GT | LT | LE |GE) expr 	#relationalExpr
+    | NOT expr                      #notExpr
+    | expr AND expr                 #andExpr
+    | expr OR expr                  #orExpr
+    | expr IS referenceType         #isExpr
     | IDENTIFIER				    #varExpr
     | NUMBER					    #numExpr
-    | NEW type argumentList         #newExpr
-    | NULL                          #nullExpr
+    | NEW referenceType argumentList#newExpr
+    | NIL                           #nullExpr
+    | SUPER                         #superExpr
+    | SELF                          #selfExpr
     | '(' expr ')'				    #parenExpr
+;
+
+outputStatement: OUTPUT expr
 ;
 
 blockStatement: BEGIN (stmt)* END
@@ -83,15 +94,18 @@ assignStatement: expr '=' expr
 variableDeclStatement: VAR IDENTIFIER ':' type
 ;
 
-type: valueType | referenceType
+type: valueType | referenceType | voidType
 ;
 
 valueType : INT
 ;
 
 referenceType :
-    IDENTIFIER #simpleType
+    IDENTIFIER
     // | ARRAY '<' referenceType '>' #arrayType
+;
+
+voidType : VOID
 ;
 
 
@@ -102,20 +116,31 @@ DIV : '/' ;
 ADD : '+' ;
 SUB : '-' ;
 GT  : '>' ;
+LT  : '<' ;
+GE  : '>=' ;
+LE  : '<=' ;
 EQ  : '==' ;
 NE  : '!=' ;
+
+AND : 'AND' ;
+OR  : 'OR'  ;
+NOT : 'NOT' ;
 
 NUMBER : [0-9]+ ;
 
 NEW: 'NEW' ;
 BEGIN : 'BEGIN' ;
 END   : 'END' ;
-CLSSS : 'class' ;
+CLSSS : 'CLASS' ;
 INTERFACE: 'INTERFACE' ;
 STATIC: 'STATIC';
 FIELD: 'FIELD';
 FUNC: 'FUNC';
-NULL: 'NULL';
+NIL: 'NIL';
+IS: 'IS' ;
+SUPER: 'SUPER';
+SELF: 'SELF';
+OUTPUT: 'OUTPUT';
 
 IF: 'IF' ;
 THEN: 'THEN' ;
@@ -127,7 +152,8 @@ ARRAY: 'ARRAY';
 
 RETURN: 'RETURN' ;
 VAR: 'VAR' ;
-INT: 'INT' ;
+INT: 'Int' ;
+VOID: 'Void';
 
 IDENTIFIER : [a-zA-Z_][a-zA-Z0-9_]* ;
 

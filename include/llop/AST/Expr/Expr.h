@@ -6,9 +6,9 @@
 #define LLVM_OOP_EXPR_H
 
 
-#include "../Node.h"
+#include "../Stmt/Stmt.h"
 
-class Expr : public Node {
+class Expr : public Stmt {
 
 };
 

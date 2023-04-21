@@ -9,9 +9,11 @@ enum RelationalOp {
     EQ,
     NE,
     LT,
-    SM,
+    GT,
     LE,
-    SE
+    GE
 };
+
+
 
 #endif //LLVM_OOP_RELATIONALOP_H

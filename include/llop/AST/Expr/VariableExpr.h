@@ -14,7 +14,9 @@ private:
 public:
     explicit VariableExpr(std::string name) : name(std::move(name)) {}
 
-    std::string getName() { return name; }
+    std::string Name() { return name; }
+
+    GenValue * codegen(Context* ctx) override;
 };
 
 #endif //LLVM_OOP_VARIABLEEXPR_H

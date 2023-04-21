@@ -10,18 +10,20 @@
 
 class IfStmt : public Stmt {
 private:
-    Expr *Condition;
+    Expr *condition;
     Stmt *thenStmt;
     Stmt *elseStmt;
 public:
-    IfStmt(Expr *Condition, Stmt *thenStmt, Stmt *elseStmt) : Condition(Condition), thenStmt(thenStmt),
+    IfStmt(Expr *Condition, Stmt *thenStmt, Stmt *elseStmt) : condition(Condition), thenStmt(thenStmt),
                                                               elseStmt(elseStmt) {}
 
-    Expr *getCondition() { return Condition; }
+    Expr *Condition() { return condition; }
 
-    Stmt *getThenStmt() { return thenStmt; }
+    Stmt *ThenStmt() { return thenStmt; }
 
-    Stmt *getElseStmt() { return elseStmt; }
+    Stmt *ElseStmt() { return elseStmt; }
+
+    GenValue * codegen(Context* ctx) override;
 };
 
 #endif //LLVM_OOP_IFSTMT_H

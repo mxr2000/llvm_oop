@@ -1,0 +1,41 @@
+CLASS Integer (Object) []
+BEGIN
+    VAR val: Int
+
+    FUNC init(val: Int) -> Void
+    BEGIN
+        self.val = val
+    END
+
+    FUNC get() -> Int
+    BEGIN
+        RETURN self.val
+    END
+END
+
+STATIC Program
+BEGIN
+    FUNC main() -> Void
+    BEGIN
+        VAR arr: Array
+        VAR i: Int
+        VAR sum: Int
+
+        arr = NEW Array(5)
+        i = 0
+        sum = 0
+
+        WHILE (i < 5)
+        BEGIN
+            arr.set(i, i)
+            i = i + 1
+        END
+
+        i = 0
+        WHILE (i < 5)
+        BEGIN
+            sum = sum + arr.get(i).[Integer].get()
+            i = i + 1
+        END
+    END
+END

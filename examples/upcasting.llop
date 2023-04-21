@@ -1,0 +1,61 @@
+CLASS Person (Object) []
+BEGIN
+    VAR age: Int
+    VAR salary: Int
+
+    FUNC init(age: Int, salary: Int) -> Void
+    BEGIN
+        self.age = age
+        self.salary = salary
+    END
+
+    FUNC getAge() -> Int
+    BEGIN
+        RETURN self.age
+    END
+
+    FUNC getSalary() -> Int
+    BEGIN
+        RETURN self.age
+    END
+END
+
+
+CLASS Employee (Person) []
+BEGIN
+    VAR id: Int
+
+    FUNC init(age: Int, salary: Int, id: Int) -> Void
+    BEGIN
+        super.init(age, salary)
+        self.id = id
+    END
+
+    FUNC getSalary() -> Int
+    BEGIN
+        RETURN 0
+    END
+
+END
+
+STATIC Program
+BEGIN
+
+    FUNC getSalary(p: Person) -> Int
+    BEGIN
+        RETURN p.getSalary()
+    END
+
+    FUNC main() -> Void
+    BEGIN
+        VAR person: Person
+        VAR employee: Employee
+        person = new Person(10, 100)
+        employee = new Employee(20, 1000, 20)
+        VAR result1: Int
+        VAR result2: Int
+
+        result1 = getSalary(person)
+        result2 = getSalary(employee)
+    END
+END

@@ -7,14 +7,10 @@
 
 #include "ReferenceType.h"
 #include <string>
+#include <utility>
 
 class SimpleType : public ReferenceType {
-private:
-    std::string name;
-public:
-    explicit SimpleType(std::string name) : name(name) {}
 
-    std::string getName() { return name; }
 };
 
 #endif //LLVM_OOP_SIMPLETYPE_H

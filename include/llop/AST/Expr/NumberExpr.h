@@ -11,6 +11,8 @@ private:
     int val;
 public:
     explicit NumberExpr(int val) : val(val) {}
-    int getVal() { return val; }
+    int Val() const { return val; }
+
+    GenValue * codegen(Context* ctx) override;
 };
 #endif //LLVM_OOP_NUMBEREXPR_H

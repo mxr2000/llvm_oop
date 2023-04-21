@@ -7,6 +7,7 @@
 
 #include "../Node.h"
 #include <string>
+#include <utility>
 #include "../Type/Type.h"
 
 class Param : public Node {
@@ -14,7 +15,13 @@ private:
     std::string name;
     Type *type;
 public:
-    Param(std::string name, Type *type) : name(name), type(type) {}
+    Param(std::string name, Type *type) : name(std::move(name)), type(type) {}
+
+    std::string Name() { return name; }
+
+    Type *Type() { return type; }
+
+    GenValue *codegen(Context *ctx) override { return nullptr; }
 };
 
 #endif //LLVM_OOP_PARAM_H

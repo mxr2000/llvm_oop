@@ -1,0 +1,47 @@
+INTERFACE Eater
+BEGIN
+    FUNC eat() -> Void
+END
+
+
+CLASS Dog (Object) [Eater]
+BEGIN
+    FUNC eat() -> Void
+    BEGIN
+    END
+END
+
+CLASS Cat (Object) [Eater]
+BEGIN
+    FUNC eat() -> Void
+    BEGIN
+    END
+END
+
+CLASS Grass (Object) []
+BEGIN
+
+END
+
+STATIC Program
+BEGIN
+
+    FUNC eat(eater: Eater) -> Void
+    BEGIN
+        eater.eat()
+    END
+
+    FUNC main() -> Void
+    BEGIN
+        VAR cat: Cat
+        VAR dog: Dog
+        VAR grass: Grass
+        cat = new Cat()
+        dog = new Dog()
+        grass = new Grass()
+        eat(cat)
+        eat(dog)
+        IF (grass IS Eater) THEN
+            eat(grass.[Eater])
+    END
+END
