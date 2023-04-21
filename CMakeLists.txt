@@ -12,7 +12,8 @@ set(ANTLR4_TAG 4.10.1)
 include(ExternalAntlr4Cpp)
 include_directories(${ANTLR4_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/build/lib/Parser/antlr4cpp_generated_src/LLOP)
-include_directories(/opt/homebrew/Cellar/antlr4-cpp-runtime/4.12.0/include/antlr4-runtime)
+#include_directories(/opt/homebrew/Cellar/antlr4-cpp-runtime/4.12.0/include/antlr4-runtime)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/build/antlr4-runtime/runtime/Cpp/runtime/src)
 
 
 find_package(ANTLR)
