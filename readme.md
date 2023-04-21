@@ -1,10 +1,13 @@
 # LLOP: An implementation of Objective Oriented Language Constructs to LLVM IR
 
+## About
+
 Document can be found at:
 https://mxr2000.github.io/llop_doc
 
 Grammar of the language: https://github.com/mxr2000/llvm_oop/blob/master/lib/Parser/LLOP.g4
 
+## Build
 
 Prerequisite:
 
@@ -21,7 +24,7 @@ cmake --build .
 ```
 
 
-
+## Example
 
 Example of a program: https://github.com/mxr2000/llvm_oop/blob/master/examples/demo.llop
 
