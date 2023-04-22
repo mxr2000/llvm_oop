@@ -1,0 +1,85 @@
+CLASS Food (Object) []
+BEGIN
+    VAR id: Int
+    FUNC init(id: Int) -> Void
+    BEGIN
+        SELF.id = id
+    END
+
+    FUNC desc() -> Void
+    BEGIN
+        OUTPUT id
+    END
+END
+
+CLASS Person (Object) []
+BEGIN
+    VAR age: Int
+    FUNC init(age: Int) -> Void
+    BEGIN
+        SELF.age = age
+    END
+
+    FUNC say(age: Int) -> Void
+    BEGIN
+        OUTPUT age
+    END
+
+    FUNC eat(food: Food) -> Void
+    BEGIN
+        OUTPUT age
+        OUTPUT SELF.age
+        OUTPUT food.id
+    END
+END
+
+STATIC Employee
+BEGIN
+    FUNC call(e: Employee) -> Void
+    BEGIN
+        OUTPUT e.id
+        OUTPUT e.age
+    END
+
+END
+
+CLASS Employee (Person) []
+BEGIN
+    VAR id: Int
+    VAR lunch: Food
+
+    FUNC init(age: Int, id: Int, food: Food) -> Void
+    BEGIN
+        SUPER.init(age)
+        SELF.id = id
+        SELF.food = food
+    END
+
+    FUNC say(age: Int) -> Void
+    BEGIN
+        SUPER.say(age)
+        OUTPUT (age + 99)
+        say2()
+        SELF.say2()
+        lunch.desc()
+    END
+
+    FUNC say2() -> Void
+    BEGIN
+        call(SELF)
+        Employee::call(SELF)
+    END
+END
+
+STATIC Program
+BEGIN
+    FUNC main() -> Int
+    BEGIN
+        VAR food: Food
+        VAR e: Employee
+        food = NEW Food(9)
+        e = NEW Employee(20, 100, food)
+        e.say(15)
+        RETURN 0
+    END
+END

@@ -1,0 +1,44 @@
+CLASS Food (Object) []
+BEGIN
+    VAR id: Int
+    FUNC init(id: Int) -> Void
+    BEGIN
+        SELF.id = id
+    END
+END
+
+CLASS Person (Object) []
+BEGIN
+    VAR age: Int
+    FUNC init(age: Int) -> Void
+    BEGIN
+        SELF.age = age
+    END
+
+    FUNC say(age: Int)
+    BEGIN
+        OUTPUT age
+        OUTPUT SELF.age
+    END
+
+    FUNC eat(food: Food)
+    BEGIN
+        OUTPUT age
+        OUTPUT SELF.age
+        OUTPUT food.id
+    END
+END
+
+STATIC Program
+BEGIN
+    FUNC main() -> Int
+    BEGIN
+        VAR food: Food
+        VAR p: Person
+        food = NEW Food(9)
+        p = NEW Person(20)
+        p.say(15)
+        p.eat(food)
+        RETURN 0
+    END
+END

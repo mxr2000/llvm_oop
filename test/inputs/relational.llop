@@ -1,0 +1,39 @@
+STATIC Program
+BEGIN
+    FUNC main() -> Int
+    BEGIN
+        VAR a: Int
+        VAR b: Int
+        VAR c: Int
+        a = 10
+        b = 20
+        c = 20
+        IF (a > b) THEN
+            OUTPUT 0
+        ELSE
+            OUTPUT 1
+        IF (a < b) THEN
+            OUTPUT 1
+        ELSE
+            OUTPUT 0
+        IF (b == c) THEN
+            OUTPUT 1
+        ELSE
+            OUTPUT 0
+        IF (b != c) THEN
+            OUTPUT 0
+        ELSE
+            OUTPUT 1
+
+        IF (c >= b AND c >= a) THEN
+            OUTPUT 1
+        ELSE
+            OUTPUT 0
+        IF (a <= b AND b <= c) THEN
+            OUTPUT 1
+        ELSE
+            OUTPUT 0
+
+        RETURN 0
+    END
+END
