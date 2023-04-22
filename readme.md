@@ -8,12 +8,18 @@ https://mxr2000.github.io/llop_doc
 Grammar of the language: https://github.com/mxr2000/llvm_oop/blob/master/lib/Parser/LLOP.g4
 
 ## Build
+This is only tested on Mac❗
 
 Prerequisite:
 
 1. LLVM 16
 2. Antlr4 Runtime
 3. Cmake
+
+Install Dependencies
+```shell
+./bin/bootstrap.sh
+```
 
 Build:
 
