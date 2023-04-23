@@ -1,0 +1,35 @@
+STATIC Program
+BEGIN
+    FUNC getOne() -> Int
+    BEGIN
+        OUTPUT 1
+        RETURN 1
+    END
+
+    FUNC getTwo() -> Int
+    BEGIN
+        OUTPUT 2
+        RETURN 2
+    END
+
+    FUNC main() -> Int
+    BEGIN
+        IF (getOne() == 1 AND getTwo() == 2) THEN
+            OUTPUT 11
+        IF (getOne() == 1 AND getTwo() == 0) THEN
+            OUTPUT 12
+        IF (getOne() == 1 OR getTwo() == 2) THEN
+            OUTPUT 13
+        IF (getOne() == 0 OR getTwo() == 2) THEN
+            OUTPUT 14
+        IF (getOne() == 0 OR getTwo() == 0) THEN
+            OUTPUT 15
+        IF (NOT getOne() == 0) THEN
+            OUTPUT 16
+        IF (NOT getOne() == 1) THEN
+            OUTPUT 17
+        RETURN 0
+    END
+
+
+END

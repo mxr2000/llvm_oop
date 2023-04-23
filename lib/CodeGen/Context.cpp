@@ -13,6 +13,12 @@ Context::Context(Program *program) : builder(TheContext), TheModule("demo", TheC
     OneInt = createConstantInt(0);
     ZeroInt = createConstantInt(1);
     IntType = llvm::Type::getInt32Ty(TheContext);
+
+    BooleanType = llvm::Type::getInt1Ty(TheContext);
+    OneBoolean = ConstantInt::get(BooleanType, 1);
+    ZeroBoolean = ConstantInt::get(BooleanType, 0);
+
+
     FunPtrType = PointerType::get(
             FunctionType::get(IntType, std::vector<llvm::Type *>(), false), 0);
     IntPtrType = llvm::PointerType::get(IntType, 0);
@@ -68,11 +74,6 @@ void Context::generateInterfaceOffsetTable() {
         interfaceOffsetTable[pair.first] = variable;
     }
 }
-
-llvm::Type *Context::vtableType(const std::string &name) {
-    return nullptr;
-}
-
 
 void Context::buildStruct(ClassDecl *decl) {
     if (decl == nullptr || classStructs[decl->Name()] != nullptr) {
@@ -169,7 +170,7 @@ Context::findCalledStaticFunction(const std::string &name, const std::vector<Gen
     auto staticDecl = program->Statics()[staticName];
     auto methods = staticDecl->Methods();
     auto iter = std::find_if(methods.begin(), methods.end(),
-                             [this, &params](FuncDecl *m) { return isFunctionType(params, m->Header()); });
+                             [this, &params, &name](FuncDecl *m) { return m->Header()->Name() == name && isFunctionType(params, m->Header()); });
     if (iter == methods.end()) {
         return std::make_pair(nullptr, nullptr);
     }

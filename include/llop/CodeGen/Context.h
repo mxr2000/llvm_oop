@@ -85,6 +85,12 @@ public:
 
     Value *OneInt;
 
+    Value *ZeroBoolean;
+
+    Value *OneBoolean;
+
+    llvm::Type *BooleanType;
+
     llvm::Type *IntType;
 
     llvm::Type *IntPtrType;

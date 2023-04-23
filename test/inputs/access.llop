@@ -15,13 +15,13 @@ BEGIN
         SELF.age = age
     END
 
-    FUNC say(age: Int)
+    FUNC say(age: Int) -> Void
     BEGIN
         OUTPUT age
         OUTPUT SELF.age
     END
 
-    FUNC eat(food: Food)
+    FUNC eat(food: Food) -> Void
     BEGIN
         OUTPUT age
         OUTPUT SELF.age

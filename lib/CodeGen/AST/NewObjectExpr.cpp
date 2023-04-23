@@ -31,6 +31,6 @@ GenValue *NewObjectExpr::codegen(Context *ctx) {
     Value *fp = ctx->Builder().CreateGEP(tableType, vtable, indices);
     Value *f = ctx->Builder().CreateLoad(ctx->IntPtrType, fp);
 
-    ctx->Builder().CreateCall(ctx->headerToLlvmType(ctx->getMethodHeader(type, 2), true), f, args);
+    ctx->Builder().CreateCall(ctx->headerToLlvmType(ctx->getMethodHeader(type, 0), true), f, args);
     return new GenValue(type, calloc);
 }

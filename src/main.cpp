@@ -1,12 +1,14 @@
 #include <iostream>
-
+#include <fstream>
 #include "llop/Parser/ASTBuilder.h"
 #include "LLOPLexer.h"
 #include "llop/CodeGen/Context.h"
 
 
-int main() {
-    antlr4::ANTLRInputStream input(std::cin);
+int main(int argc, char *argv[]) {
+    std::ifstream stream;
+    stream.open(argv[1]);
+    antlr4::ANTLRInputStream input(stream);
     LLOPLexer lexer(&input);
     antlr4::CommonTokenStream tokens(&lexer);
     LLOPParser parser(&tokens);

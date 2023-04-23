@@ -6,6 +6,6 @@
 
 GenValue *NotExpr::codegen(Context *ctx) {
     auto val = expr->codegen(ctx);
-    auto result = ctx->Builder().CreateICmpEQ(val->Value(), ctx->ZeroInt);
+    auto result = ctx->Builder().CreateICmpEQ(val->Value(), ctx->ZeroBoolean);
     return new GenValue(val->Type(), result);
 }

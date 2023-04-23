@@ -10,9 +10,6 @@ GenValue *FuncCallExpr::generateClassMethodCall(Context *ctx, std::vector<GenVal
     if (receiver == nullptr) {
         receiver = ctx->Self();
     }
-    if (name == "eat") {
-        receiver = receiver;
-    }
     auto pair = ctx->findCalledClassMethod(receiver->Type(), Name(), genArgs);
     if (pair.first != -1) {
         std::vector<Value *> args;
@@ -64,13 +61,18 @@ GenValue *FuncCallExpr::generateStaticMethodCall(Context *ctx, std::vector<GenVa
 GenValue *FuncCallExpr::codegen(Context *ctx) {
     std::vector<GenValue *> genArgs;
     genArgs.reserve(arguments.size());
+
+    // clear the receiver to not mess up with arguments
+    auto receiver = ctx->Receiver();
+    ctx->clearReceiver();
     for (auto expr: arguments) {
         genArgs.push_back(expr->codegen(ctx));
     }
+    ctx->setReceiver(receiver);
     GenValue *result{};
 
     // If static access class is not set, try to generate class method call
-    if (!ctx->StaticAccessClass()) {
+    if (!ctx->StaticAccessClass() && !(receiver == nullptr && ctx->IsInStaticMethod())) {
         result = generateClassMethodCall(ctx, genArgs);
     }
 
@@ -83,5 +85,6 @@ GenValue *FuncCallExpr::codegen(Context *ctx) {
     }
     ctx->clearLeftValueFlag();
     ctx->clearStaticAccess();
+    ctx->clearReceiver();
     return result;
 }

@@ -25,14 +25,23 @@ BEGIN
         ELSE
             OUTPUT 1
 
-        IF (c >= b AND c >= a) THEN
+        IF (c >= b) THEN
             OUTPUT 1
         ELSE
             OUTPUT 0
-        IF (a <= b AND b <= c) THEN
+        IF (c >= a) THEN
             OUTPUT 1
         ELSE
             OUTPUT 0
+
+        IF (a <= b) THEN
+            OUTPUT 0
+        ELSE
+            OUTPUT 1
+        IF (b <= c) THEN
+            OUTPUT 0
+        ELSE
+            OUTPUT 1
 
         RETURN 0
     END

@@ -23,7 +23,9 @@ GenValue *getLoadedValue(Context *ctx, GenValue *variable) {
 GenValue *VariableExpr::codegen(Context *ctx) {
     // load pointer when it is in left value and top level access
     bool loadPointer = ctx->LeftValueFlag() && ctx->TopLevelAccess();
-
+    if (Name() == "food" && !ctx->LeftValueFlag()) {
+        loadPointer = loadPointer;
+    }
     if (ctx->Receiver() == nullptr) {
         GenValue* variable = ctx->findVariable(Name());
         if (variable != nullptr) {
