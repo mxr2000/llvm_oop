@@ -1,0 +1,133 @@
+INTERFACE Speaker()
+BEGIN
+    FUNC speak() -> Void
+END
+
+INTERFACE Consumer
+BEGIN
+    FUNC spend(amount: Int) -> Void
+    FUNC getScores() -> Int
+END
+
+INTERFACE Worker
+BEGIN
+    FUNC getSalary() -> Int
+END
+
+INTERFACE Administrator
+BEGIN
+    FUNC control(worker: Worker) -> Int
+END
+
+CLASS Person (Object) []
+BEGIN
+    FUNC init() -> Void BEGIN END
+
+    FUNC speak() -> Void
+    BEGIN
+        OUTPUT 1
+    END
+END
+
+CLASS Employee (Person) [Consumer, Worker]
+BEGIN
+    FUNC init() -> Void BEGIN END
+
+    FUNC speak() -> Void
+    BEGIN
+
+    END
+
+    FUNC spend(amount: Int) -> Void
+    BEGIN
+
+    END
+
+    FUNC getScores() -> Int
+    BEGIN
+
+    END
+
+    FUNC getSalary() -> Int
+    BEGIN
+
+    END
+END
+
+CLASS Boss (Person) [Consumer, Administrator, Worker]
+BEGIN
+    FUNC init() -> Void BEGIN END
+
+    FUNC spend(amount: Int) -> Void
+    BEGIN
+
+    END
+
+    FUNC getScores() -> Int
+    BEGIN
+
+    END
+
+    FUNC control(worker: Worker) -> Int
+    BEGIN
+
+    END
+
+    FUNC speak() -> Void
+    BEGIN
+
+    END
+
+    FUNC getSalary() -> Int
+    BEGIN
+
+    END
+END
+
+STATIC Program
+BEGIN
+    FUNC speak(speaker: Speaker) -> Void
+    BEGIN
+
+    END
+
+    FUNC consume(consumer: Consumer) -> Void
+    BEGIN
+
+    END
+
+    FUNC work(worker: Worker) -> Void
+    BEGIN
+
+    END
+
+    FUNC control(admin: Administrator, worker: Worker) -> Void
+    BEGIN
+
+    END
+
+    FUNC main() -> Int
+    BEGIN
+        VAR person: Person
+        VAR employee: Employee
+        VAR boss: Boss
+        person = NEW Person()
+        employee = NEW Employee()
+        boss = NEW Boss()
+
+        speak(person)
+        speak(employee)
+        speak(boss)
+
+        consume(employee)
+        consume(boss)
+
+        work(employee)
+        work(boss)
+
+        control(boss, employee)
+
+        RETURN 0
+    END
+
+END

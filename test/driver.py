@@ -30,7 +30,7 @@ def copy_files():
 
 if __name__ == "__main__":
     copy_files()
-    # run_test("relational")
-    # run_test("access")
-    # run_test("boolean")
+    run_test("relational")
+    run_test("access")
+    run_test("boolean")
     run_test("override")

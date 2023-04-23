@@ -18,7 +18,7 @@ void Context::buildParentTable() {
 
 void Context::buildIndexTable() {
     int id = 0;
-    for (auto decl: program->Classes()) {
+    for (const auto& decl: program->Classes()) {
         setClassIndex(decl.first, id++);
     }
 }
@@ -93,22 +93,6 @@ void Context::generateInterfaceOffsetTable() {
         interfaceOffsetTable[pair.first] = variable;
     }
 }
-
-/*void Context::buildStruct(ClassDecl *decl) {
-    if (decl == nullptr || classStructs[decl->Name()] != nullptr) {
-        return;
-    }
-    std::vector<llvm::Type *> structFields;
-    structFields.push_back(IntPtrType);
-    for (auto field: decl->Fields()) {
-        if (field->Type()->isPointerType()) {
-            structFields.push_back(IntPtrType);
-        } else {
-            structFields.push_back(IntType);
-        }
-    }
-    StructType::create(TheContext, structFields, "struct_" + decl->Name(), true);
-}*/
 
 void Context::generateStructs() {
     for (const auto &pair: program->Classes()) {
@@ -330,7 +314,6 @@ std::string Context::getMethodSignature(const std::string &receiverClassName, Fu
 }
 
 std::string Context::getClassMethodSignature(ClassDecl *classDecl, int index) {
-
     return getMethodSignature(classDecl->Name(), classDecl->Methods()[index]->Header());
 }
 
