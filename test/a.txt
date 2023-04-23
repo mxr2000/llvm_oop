@@ -1,0 +1,16 @@
+Program output: 1
+Program output: 2
+Program output: 100
+Program output: 3
+Program output: 1000
+Program output: 5
+Program output: 1
+Program output: 99
+Program output: 2
+Program output: 99
+Program output: 101
+Program output: 105
+Program output: 3
+Program output: 99
+Program output: 101
+Program output: 103

@@ -1,0 +1,88 @@
+CLASS Person (Object) []
+BEGIN
+    VAR id: Int
+
+    FUNC init(id: Int) -> Void
+    BEGIN
+        SELF.id = id
+        OUTPUT id
+    END
+
+    FUNC getId() -> Int
+    BEGIN
+        RETURN id
+    END
+
+    FUNC speak() -> Void
+    BEGIN
+        OUTPUT 99
+    END
+END
+
+CLASS Employee (Person) []
+BEGIN
+    VAR salary: Int
+
+    FUNC init(id: Int, salary: Int) -> Void
+    BEGIN
+        SUPER.init(id)
+        SELF.salary = salary
+        OUTPUT salary
+    END
+
+    FUNC speak() -> Void
+    BEGIN
+        SUPER.speak()
+        OUTPUT 101
+    END
+
+END
+
+CLASS Admin (Employee) []
+BEGIN
+    VAR cnt: Int
+
+    FUNC init(id: Int, salary: Int, cnt: Int) -> Void
+    BEGIN
+        SUPER.init(id, salary)
+        SELF.cnt = cnt
+        OUTPUT cnt
+    END
+
+    FUNC speak() -> Void
+    BEGIN
+        SUPER.speak()
+        OUTPUT 103
+    END
+
+    FUNC getId() -> Int
+    BEGIN
+        OUTPUT 105
+        RETURN id
+    END
+END
+
+STATIC Program
+BEGIN
+    FUNC speak(person: Person) -> Void
+    BEGIN
+        OUTPUT person.getId()
+        person.speak()
+    END
+
+    FUNC main() -> Int
+    BEGIN
+        VAR person: Person
+        VAR employee: Employee
+        VAR admin: Admin
+        person = NEW Person(1)
+        employee = NEW Employee(2, 100)
+        admin = NEW Admin(3, 1000, 5)
+
+        speak(person)
+        speak(employee)
+        speak(admin)
+
+        RETURN 0
+    END
+END

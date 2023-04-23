@@ -6,6 +6,23 @@
 #include "llop/AST/Top/Program.h"
 #include <iostream>
 
+void Context::buildParentTable() {
+    for (auto decl: program->Classes()) {
+        auto cur = decl.second->Parent();
+        while (cur != nullptr) {
+            parentTable[decl.first].push_back(cur->Name());
+            cur = cur->Parent();
+        }
+    }
+}
+
+void Context::buildIndexTable() {
+    int id = 0;
+    for (auto decl: program->Classes()) {
+        setClassIndex(decl.first, id++);
+    }
+}
+
 Context::Context(Program *program) : builder(TheContext), TheModule("demo", TheContext) {
     Triple targetTriple(sys::getDefaultTargetTriple());
     TheModule.setTargetTriple(targetTriple.str());
@@ -32,6 +49,8 @@ Context::Context(Program *program) : builder(TheContext), TheModule("demo", TheC
             "output", TheModule
     );
 
+    buildIndexTable();
+    buildParentTable();
     generateVirtualTable();
     generateStructs();
     program->codegen(this);
@@ -75,7 +94,7 @@ void Context::generateInterfaceOffsetTable() {
     }
 }
 
-void Context::buildStruct(ClassDecl *decl) {
+/*void Context::buildStruct(ClassDecl *decl) {
     if (decl == nullptr || classStructs[decl->Name()] != nullptr) {
         return;
     }
@@ -88,8 +107,8 @@ void Context::buildStruct(ClassDecl *decl) {
             structFields.push_back(IntType);
         }
     }
-    StructType::create(TheContext, structFields, "struct_" + decl->Name());
-}
+    StructType::create(TheContext, structFields, "struct_" + decl->Name(), true);
+}*/
 
 void Context::generateStructs() {
     for (const auto &pair: program->Classes()) {
@@ -105,7 +124,7 @@ void Context::generateStructs() {
                 structFields.push_back(IntType);
             }
         }
-        auto *type = StructType::create(TheContext, structFields, "struct_" + name);
+        auto *type = StructType::create(TheContext, structFields, "struct_" + name, true);
         classStructs[name] = type;
     }
 }
@@ -242,8 +261,8 @@ bool Context::isSubType(::Type *sub, ::Type *parent) {
     if (sub->toString() == parent->toString()) {
         return true;
     }
-    auto extended = parentTable[parent->toString()];
-    return std::find(extended.begin(), extended.end(), sub->toString()) != extended.end();
+    auto beExtended = parentTable[sub->toString()];
+    return std::find(beExtended.begin(), beExtended.end(), parent->toString()) != beExtended.end();
 }
 
 bool Context::isFunctionType(const std::vector<GenValue *> &args, FuncHeader *header) {
@@ -253,9 +272,11 @@ bool Context::isFunctionType(const std::vector<GenValue *> &args, FuncHeader *he
     }
     for (int i = 0; i < args.size(); i++) {
         if (!args[i]->Type()->isPointerType() && args[i]->Type()->toString() != params[i]->Type()->toString()) {
+            std::cout << "should not be here 1" << std::endl;
             return false;
         }
         if (args[i]->Type()->isPointerType() && !isSubType(args[i]->Type(), params[i]->Type())) {
+            std::cout << "should not be here 2" << std::endl;
             return false;
         }
     }

@@ -20,15 +20,13 @@ GenValue *FuncCallExpr::generateClassMethodCall(Context *ctx, std::vector<GenVal
         auto className = receiver->Type()->toString();
         auto tableType = ctx->getVtableType(className);
 
-        Value *table = ctx->Builder().CreateLoad(PointerType::get(tableType, 0),
-                                                 ctx->Builder().CreateStructGEP(ctx->getStructType(className), receiver->Value(), 0));
-        // load virtual table of parent class
+        Value *table;
         if (receiver->isSuper()) {
-            std::vector<Value *> indices;
-            indices.push_back(ConstantInt::get(ctx->IntType, 0));
-            indices.push_back(ConstantInt::get(ctx->IntType, 1));
-            auto tp = ctx->Builder().CreateGEP(tableType, table, indices);
-            table = ctx->Builder().CreateLoad(PointerType::get(tableType, 0), tp);
+            table = ctx->getVtable(receiver->Type()->toString());
+        } else {
+            auto structType = ctx->getStructType(className);
+            table = ctx->Builder().CreateLoad(PointerType::get(tableType, 0),
+                                              ctx->Builder().CreateStructGEP(structType, receiver->Value(), 0));
         }
 
         std::vector<Value *> indices;

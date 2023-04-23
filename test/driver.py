@@ -1,4 +1,6 @@
 import subprocess
+
+
 def print_diff(expected: str, actual: str):
     print("\033[32mExpected:")
     print(expected)
@@ -30,4 +32,5 @@ if __name__ == "__main__":
     copy_files()
     # run_test("relational")
     # run_test("access")
-    run_test("boolean")
+    # run_test("boolean")
+    run_test("override")

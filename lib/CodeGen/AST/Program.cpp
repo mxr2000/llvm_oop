@@ -15,11 +15,8 @@ GenValue *Program::codegen(Context *ctx) {
     for (auto staticDecl: staticDecls) {
         staticDecl.second->codegen(ctx);
     }
-    int id = 0;
     for (auto classDecl: classDecls) {
-        ctx->setClassIndex(classDecl.first, id);
         classDecl.second->codegen(ctx);
-        ++id;
     }
     return nullptr;
 }

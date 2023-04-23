@@ -67,7 +67,11 @@ private:
 
     void generateStructs();
 
-    void buildStruct(ClassDecl *decl);
+    //void buildStruct(ClassDecl *decl);
+
+    void buildParentTable();
+
+    void buildIndexTable();
 
     static std::string getMethodSignature(const std::string &receiverClassName, FuncHeader *header);
 
