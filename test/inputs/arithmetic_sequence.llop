@@ -1,0 +1,17 @@
+STATIC Program
+BEGIN
+    FUNC main() -> Int
+    BEGIN
+        VAR i: Int
+        VAR result: Int
+        i = 0
+        result = 0
+        WHILE (i < 10)
+        BEGIN
+            i = i + 1
+            result = result + i
+        END
+        OUTPUT result
+        RETURN 0
+    END
+END

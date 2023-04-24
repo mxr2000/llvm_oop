@@ -19,7 +19,7 @@ GenValue *WhileStmt::codegen(Context *ctx) {
 
     ctx->Builder().SetInsertPoint(bodyBlock);
     body->codegen(ctx);
-    ctx->Builder().CreateBr(exitBlock);
+    ctx->Builder().CreateBr(headerBlock);
 
     ctx->Builder().SetInsertPoint(exitBlock);
     return nullptr;
