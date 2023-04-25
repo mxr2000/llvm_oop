@@ -210,4 +210,14 @@ public:
     void createStaticFunction(const std::string& staticName, FuncHeader *header);
 };
 
+class Ctx {
+
+public:
+    virtual void pushSymbolTable() = 0;
+    virtual void popSymbolTable() = 0;
+    virtual bool IsInClass() = 0;
+    virtual bool IsInStatic() = 0;
+
+};
+
 #endif //LLVM_OOP_CONTEXT_H
