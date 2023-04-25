@@ -57,6 +57,7 @@ expr: referenceType '::' expr       #staticAccessExpr
     | expr IS referenceType         #isExpr
     | IDENTIFIER				    #varExpr
     | NUMBER					    #numExpr
+    | TRUE | FALSE                  #boolLiteralExpr
     | NEW referenceType argumentList#newExpr
     | NIL                           #nullExpr
     | SUPER                         #superExpr
@@ -97,7 +98,7 @@ variableDeclStatement: VAR IDENTIFIER ':' type
 type: valueType | referenceType | voidType
 ;
 
-valueType : INT
+valueType : INT | LONG | CHAR | BOOL
 ;
 
 referenceType :
@@ -153,7 +154,13 @@ ARRAY: 'ARRAY';
 RETURN: 'RETURN' ;
 VAR: 'VAR' ;
 INT: 'Int' ;
+BOOL: 'Bool' ;
+LONG: 'Long' ;
+CHAR: 'Char' ;
 VOID: 'Void';
+
+TRUE: 'TRUE' ;
+FALSE: 'FALSE' ;
 
 IDENTIFIER : [a-zA-Z_][a-zA-Z0-9_]* ;
 

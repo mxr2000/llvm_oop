@@ -9,6 +9,10 @@
 #include <string>
 #include <utility>
 
+enum BasicType {
+    Int, Char, Long, Bool
+};
+
 class ValueType : public Type {
 private:
     std::string name;
