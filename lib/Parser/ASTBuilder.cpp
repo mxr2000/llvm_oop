@@ -111,7 +111,6 @@ std::any ASTBuilder::visitVarExpr(LLOPParser::VarExprContext *ctx) {
 }
 
 std::any ASTBuilder::visitNewExpr(LLOPParser::NewExprContext *ctx) {
-    std::cout << ctx->referenceType()->getText() << std::endl;
     visit(ctx->referenceType());
     auto *type = (ReferenceType *) lastType;
     std::vector<Expr *> arguments;
@@ -124,7 +123,17 @@ std::any ASTBuilder::visitNewExpr(LLOPParser::NewExprContext *ctx) {
 }
 
 std::any ASTBuilder::visitValueType(LLOPParser::ValueTypeContext *ctx) {
-    lastType = new ValueType(ctx->getText());
+    if (ctx->BOOL()) {
+        lastType = ValueType::BoolType;
+    } else if (ctx->INT()) {
+        lastType = ValueType::IntType;
+    } else if (ctx->CHAR()) {
+        lastType = ValueType::CharType;
+    } else if (ctx->LONG()) {
+        lastType = ValueType::LongType;
+    } else {
+        throw std::runtime_error("Unknown type");
+    }
     return nullptr;
 }
 
@@ -317,6 +326,7 @@ std::any ASTBuilder::visitProgram(LLOPParser::ProgramContext *ctx) {
     } catch (std::bad_any_cast const &err) {
         std::cout << err.what();
     }
+    return nullptr;
 }
 
 ASTBuilder::ASTBuilder(LLOPParser::ProgramContext *ctx) {
@@ -384,8 +394,35 @@ std::any ASTBuilder::visitStmt(LLOPParser::StmtContext *ctx) {
 }
 
 
-std::any ASTBuilder::visitOutputStatement(LLOPParser::OutputStatementContext *ctx)  {
+std::any ASTBuilder::visitOutputStatement(LLOPParser::OutputStatementContext *ctx) {
     visit(ctx->expr());
     lastStmt = new OutputStmt(lastExpr);
+    return nullptr;
+}
+
+std::any ASTBuilder::visitBoolLiteralExpr(LLOPParser::BoolLiteralExprContext *ctx) {
+    return nullptr;
+}
+
+std::any ASTBuilder::visitArrayType(LLOPParser::ArrayTypeContext *ctx) {
+    visit(ctx->type());
+    lastType = new ArrayType(lastType);
+    return nullptr;
+}
+
+std::any ASTBuilder::visitArrayIndexExpr(LLOPParser::ArrayIndexExprContext *ctx) {
+    visit(ctx->expr(0));
+    Expr *lhs = lastExpr;
+    visit(ctx->expr(1));
+    Expr *rhs = lastExpr;
+    lastExpr = new ArrayIndexExpr(lhs, rhs);
+    return nullptr;
+}
+
+std::any ASTBuilder::visitNewArrayExpr(LLOPParser::NewArrayExprContext *ctx) {
+    visit(ctx->arrayType());
+    auto arrayType = dynamic_cast<ArrayType*>(lastType);
+    visit(ctx->expr());
+    lastExpr = new NewArrayExpr(arrayType, lastExpr);
     return nullptr;
 }

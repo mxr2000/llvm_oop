@@ -12,6 +12,10 @@ class Type : public Node {
 public:
     virtual bool isPointerType() = 0;
 
+    virtual bool isValueType() { return false; }
+
+    virtual bool isArrayType() {return false;}
+
     virtual std::string toString() = 0;
 
     virtual bool isVoid() { return false; }

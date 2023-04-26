@@ -35,6 +35,11 @@ Context::Context(Program *program) : builder(TheContext), TheModule("demo", TheC
     OneBoolean = ConstantInt::get(BooleanType, 1);
     ZeroBoolean = ConstantInt::get(BooleanType, 0);
 
+    BasicTypes[BasicType::Int] = IntType;
+    BasicTypes[BasicType::Long] = llvm::Type::getInt64Ty(TheContext);
+    BasicTypes[BasicType::Char] = llvm::Type::getInt8Ty(TheContext);
+    BasicTypes[BasicType::Bool] = BooleanType;
+
 
     FunPtrType = PointerType::get(
             FunctionType::get(IntType, std::vector<llvm::Type *>(), false), 0);
@@ -297,6 +302,14 @@ uint64_t Context::getStructSize(const std::string &name) {
     return TheModule.getDataLayout().getStructLayout(classStruct)->getSizeInBytes();
 }
 
+uint64_t Context::getValueSize(ValueType* type) {
+    return TheModule.getDataLayout().getTypeStoreSize(BasicTypes[type->BasicType()]);
+}
+
+uint64_t Context::getPointerSize() {
+    return TheModule.getDataLayout().getTypeSizeInBits(IntPtrType);
+}
+
 GlobalVariable *Context::getVtable(const std::string &name) {
     return vtables[name];
 }
@@ -351,5 +364,19 @@ llvm::FunctionType *Context::headerToLlvmType(FuncHeader *header, bool isClassMe
 llvm::Function* Context::getStaticMethod(FuncHeader* header) {
     auto fName = getStaticMethodSignature(curStatic, header);
     return staticFunctions[fName];
+}
+
+GenValue *Context::getLoadedValue(GenValue *variable) {
+    auto type = variable->Type();
+    auto value = variable->Value();
+    Value *loaded{};
+
+    if (type->isPointerType()) {
+        loaded = Builder().CreateLoad(IntPtrType, value, "var");
+    } else {
+        auto valueType = dynamic_cast<ValueType*>(type);
+        loaded = Builder().CreateLoad(BasicTypes[valueType->BasicType()], value, "var");
+    }
+    return new GenValue(type, loaded);
 }
 

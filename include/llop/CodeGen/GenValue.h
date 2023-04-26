@@ -25,8 +25,6 @@ public:
 
     Type *Type() { return type; }
 
-    bool isReference();
-
     bool isInt();
 
     static GenValue *createIntGenValue(llvm::Value * val);
@@ -52,6 +50,7 @@ public:
 
     bool isNull() override { return true; }
 };
+
 
 
 

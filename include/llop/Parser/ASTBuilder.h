@@ -92,6 +92,8 @@ public:
 
     std::any visitAndExpr(LLOPParser::AndExprContext *ctx) override;
 
+    std::any visitNewArrayExpr(LLOPParser::NewArrayExprContext *ctx) override;
+
     std::any visitOrExpr(LLOPParser::OrExprContext *ctx) override;
 
     std::any visitNotExpr(LLOPParser::NotExprContext *ctx) override;
@@ -112,14 +114,19 @@ public:
 
     std::any visitStmt(LLOPParser::StmtContext *ctx) override;
 
+    std::any visitArrayIndexExpr(LLOPParser::ArrayIndexExprContext *ctx) override;
+
     std::any visitOutputStatement(LLOPParser::OutputStatementContext *ctx) override;
 
+    std::any visitBoolLiteralExpr(LLOPParser::BoolLiteralExprContext *ctx) override;
     /* Type */
     std::any visitValueType(LLOPParser::ValueTypeContext *ctx) override;
 
     std::any visitReferenceType(LLOPParser::ReferenceTypeContext *ctx) override;
 
     std::any visitVoidType(LLOPParser::VoidTypeContext *ctx) override;
+
+    std::any visitArrayType(LLOPParser::ArrayTypeContext *ctx) override;
 
 };
 

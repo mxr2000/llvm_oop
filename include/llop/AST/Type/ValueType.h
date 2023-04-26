@@ -15,17 +15,38 @@ enum BasicType {
 
 class ValueType : public Type {
 private:
-    std::string name;
+    BasicType basicType;
 public:
-    explicit ValueType(std::string name) : name(std::move(name)) {}
+    explicit ValueType(BasicType type) : basicType(type) {}
 
-    std::string Name() { return name; }
+    std::string Name() {
+        switch (basicType) {
+            case BasicType::Int:
+                return "Int";
+            case BasicType::Char:
+                return "Char";
+            case BasicType::Long:
+                return "Long";
+            case BasicType::Bool:
+                return "Bool";
+        }
+        throw std::runtime_error("unknown basic type");
+    }
 
     bool isPointerType() override { return false; }
+
+    bool isValueType() override { return true; }
 
     std::string toString() override { return Name(); }
 
     GenValue *codegen(Context *ctx) override { return nullptr; }
+
+    BasicType BasicType() { return basicType; }
+
+    static ValueType *IntType;
+    static ValueType *LongType;
+    static ValueType *CharType;
+    static ValueType *BoolType;
 };
 
 #endif //LLVM_OOP_VALUETYPE_H

@@ -7,5 +7,5 @@
 
 GenValue *NumberExpr::codegen(Context *ctx) {
     auto value = ConstantInt::get(ctx->IntType, val);
-    return new GenValue(new ValueType("Int"), value);
+    return new GenValue(ValueType::IntType, value);
 }

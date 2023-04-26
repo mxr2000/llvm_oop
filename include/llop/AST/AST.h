@@ -27,6 +27,9 @@
 #include "Expr/SelfExpr.h"
 #include "Expr/StaticAccessExpr.h"
 #include "Expr/IsExpr.h"
+#include "Expr/BoolLiteralExpr.h"
+#include "Expr/ArrayIndexExpr.h"
+#include "Expr/NewArrayExpr.h"
 
 #include "Stmt/Stmt.h"
 #include "Stmt/IfStmt.h"
@@ -46,10 +49,10 @@
 #include "Fragment/FuncHeader.h"
 #include "Fragment/Param.h"
 
-#include "Type/ArrayType.h"
 #include "Type/SimpleType.h"
 #include "Type/Type.h"
 #include "Type/ReferenceType.h"
 #include "Type/ValueType.h"
 #include "Type/VoidType.h"
+#include "Type/ArrayType.h"
 #endif //LLVM_OOP_AST_H

@@ -37,6 +37,10 @@ target_sources(code_gen PRIVATE
         AST/StaticAccessExpr.cpp
         AST/SuperExpr.cpp
         AST/SelfExpr.cpp
+        AST/BoolLiteralExpr.cpp
+        AST/NullExpr.cpp
+        AST/ArrayIndexExpr.cpp
+        AST/NewArrayExpr.cpp
         )
 
 llvm_map_components_to_libnames(llvm_libs Support Core Passes)

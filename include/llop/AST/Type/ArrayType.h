@@ -13,7 +13,9 @@ private:
 public:
     explicit ArrayType(Type *subType) : ReferenceType(""), subType(subType) {}
 
-    Type *getSubType() { return subType; }
+    Type *ElementType() { return subType; }
+
+    bool isArrayType() override { return true; }
 };
 
 #endif //LLVM_OOP_ARRAYTYPE_H

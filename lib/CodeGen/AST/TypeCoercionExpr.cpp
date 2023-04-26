@@ -7,5 +7,11 @@
 
 GenValue *TypeCoercionExpr::codegen(Context *ctx) {
     auto value = expr->codegen(ctx);
+    if (value->Type()->isValueType()) {
+        //ctx->Builder().CreateTrunc()
+        //ctx->Builder().CreateSExt()
+    } else {
+
+    }
     return new GenValue(type, value->Value());
 }

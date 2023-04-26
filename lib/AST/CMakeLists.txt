@@ -6,4 +6,5 @@ target_sources(ast PRIVATE
         ClassDecl.cpp
         InterfaceDecl.cpp
         FuncDecl.cpp
+        ValueType.cpp
         )

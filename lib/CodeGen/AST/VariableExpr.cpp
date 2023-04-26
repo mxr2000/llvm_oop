@@ -6,19 +6,6 @@
 #include "llop/AST/AST.h"
 #include "llop/CodeGen/Context.h"
 
-GenValue *getLoadedValue(Context *ctx, GenValue *variable) {
-    auto type = variable->Type();
-    auto value = variable->Value();
-    Value *loaded{};
-
-    if (type->isPointerType()) {
-        loaded = ctx->Builder().CreateLoad(ctx->IntPtrType, value, "var");
-    } else {
-        loaded = ctx->Builder().CreateLoad(ctx->IntType, value, "var");
-    }
-
-    return new GenValue(type, loaded);
-}
 
 GenValue *VariableExpr::codegen(Context *ctx) {
     // load pointer when it is in left value and top level access
@@ -30,7 +17,7 @@ GenValue *VariableExpr::codegen(Context *ctx) {
         GenValue* variable = ctx->findVariable(Name());
         if (variable != nullptr) {
             // We found a local variable, return
-            return loadPointer ? variable : getLoadedValue(ctx, variable);
+            return loadPointer ? variable : ctx->getLoadedValue(variable);
         }
     }
 
@@ -55,5 +42,5 @@ GenValue *VariableExpr::codegen(Context *ctx) {
             field.first
     );
     auto* pointer = new GenValue(field.second, address);
-    return loadPointer ? pointer : getLoadedValue(ctx, pointer);
+    return loadPointer ? pointer : ctx->getLoadedValue(pointer);
 }

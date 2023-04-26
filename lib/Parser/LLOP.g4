@@ -46,6 +46,7 @@ stmt: blockStatement
 expr: referenceType '::' expr       #staticAccessExpr
     | IDENTIFIER argumentList   	#funCallExpr
     | expr'.' '[' referenceType ']' #typeCoercionExpr
+    | expr '[' expr ']'             #arrayIndexExpr
     | expr '.' expr 			    #accessExpr
     | SUB expr                      #negExpr
     | expr op=(MUL | DIV) expr 		#multiplicativeExpr
@@ -57,8 +58,9 @@ expr: referenceType '::' expr       #staticAccessExpr
     | expr IS referenceType         #isExpr
     | IDENTIFIER				    #varExpr
     | NUMBER					    #numExpr
-    | TRUE | FALSE                  #boolLiteralExpr
+    | val=(TRUE | FALSE)            #boolLiteralExpr
     | NEW referenceType argumentList#newExpr
+    | NEW arrayType '(' expr ')'    #newArrayExpr
     | NIL                           #nullExpr
     | SUPER                         #superExpr
     | SELF                          #selfExpr
@@ -95,7 +97,7 @@ assignStatement: expr '=' expr
 variableDeclStatement: VAR IDENTIFIER ':' type
 ;
 
-type: valueType | referenceType | voidType
+type: valueType | referenceType | voidType | arrayType
 ;
 
 valueType : INT | LONG | CHAR | BOOL
@@ -107,6 +109,9 @@ referenceType :
 ;
 
 voidType : VOID
+;
+
+arrayType : '[' type ']'
 ;
 
 

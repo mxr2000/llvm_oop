@@ -17,7 +17,7 @@ def run_test(test_name: str):
         output = output_file.read()
         expected = expected_file.read()
         if output == expected:
-            print("\033[32mTest {} passed".format(test_name))
+            print("\033[32mTest {:20} passed".format(test_name))
         else:
             print_diff(expected, output)
 
@@ -34,4 +34,5 @@ if __name__ == "__main__":
     #run_test("access")
     #run_test("boolean")
     #run_test("override")
-    run_test("arithmetic_sequence")
+    #run_test("arithmetic_sequence")
+    run_test("2d_array")

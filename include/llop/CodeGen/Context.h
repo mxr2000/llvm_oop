@@ -31,6 +31,7 @@
 #include "llvm/Transforms/Scalar/GVN.h"
 #include "llvm/Transforms/Utils.h"
 #include "llop/AST/Top/Program.h"
+#include "llop/AST/Type/ValueType.h"
 
 using namespace llvm;
 
@@ -93,11 +94,13 @@ public:
 
     Value *OneBoolean;
 
+    std::unordered_map<::BasicType, llvm::Type*> BasicTypes;
+
     llvm::Type *BooleanType;
 
     llvm::Type *IntType;
 
-    llvm::Type *IntPtrType;
+    llvm::PointerType *IntPtrType;
 
     llvm::Type *FunPtrType;
 
@@ -199,15 +202,21 @@ public:
 
     uint64_t getStructSize(const std::string &name);
 
+    uint64_t getValueSize(ValueType* type);
+
+    uint64_t getPointerSize();
+
     void output(const std::string &name);
 
     llvm::FunctionType *headerToLlvmType(FuncHeader *header, bool isClassMethod);
 
     llvm::ArrayType *getVtableType(const std::string &name) { return vtableTypes[name]; }
 
-    void setClassIndex(std::string name, int index) { classIndexes[name] = index; }
+    void setClassIndex(const std::string& name, int index) { classIndexes[name] = index; }
 
     void createStaticFunction(const std::string& staticName, FuncHeader *header);
+
+    GenValue *getLoadedValue(GenValue *variable);
 };
 
 

@@ -6,7 +6,14 @@
 #include "llop/CodeGen/Context.h"
 
 GenValue *VariableDeclStmt::codegen(Context *ctx) {
-    auto value = ctx->Builder().CreateAlloca(ctx->IntPtrType);
+    Value* value;
+    if (type->isPointerType()) {
+        value = ctx->Builder().CreateAlloca(ctx->IntPtrType);
+
+    } else {
+        auto basicType = dynamic_cast<ValueType*>(type);
+        value = ctx->Builder().CreateAlloca(ctx->BasicTypes[basicType->BasicType()]);
+    }
     ctx->addValueToCurrentTable(Name(), new GenValue(type, value));
     return nullptr;
 }

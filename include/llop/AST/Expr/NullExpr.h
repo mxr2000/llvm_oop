@@ -10,7 +10,7 @@
 class NullExpr : public Expr {
 
 public:
-    GenValue *codegen(Context* ctx) override { return nullptr; }
+    GenValue *codegen(Context* ctx) override;
 };
 
 #endif //LLVM_OOP_NULLEXPR_H

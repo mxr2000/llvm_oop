@@ -12,8 +12,11 @@ GenValue *BinaryExpr::codegen(Context *ctx) {
     if (l == nullptr || r == nullptr) {
         throw std::runtime_error("null binary operand");
     }
-    if (!l->isInt() || !r->isInt()) {
-        throw std::runtime_error("non-integer binary operand");
+    if (!l->Type()->isValueType() || !r->Type()->isValueType()) {
+        throw std::runtime_error("non-value binary operand");
+    }
+    if (dynamic_cast<ValueType*>(l->Type())->BasicType() != dynamic_cast<ValueType*>(r->Type())->BasicType()) {
+        throw std::runtime_error("operand types are different");
     }
     Value *val = nullptr;
     if (op == BinaryOp::Plus) {

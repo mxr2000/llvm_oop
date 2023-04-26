@@ -27,5 +27,5 @@ GenValue *AndExpr::codegen(Context* ctx) {
     phi->addIncoming(l->Value(), leftBlock);
     phi->addIncoming(r->Value(), rightBlock);
 
-    return new GenValue(new ValueType("Int"), phi);
+    return new GenValue(ValueType::IntType, phi);
 }

@@ -1,0 +1,36 @@
+STATIC Program
+BEGIN
+    FUNC main() -> Int
+    BEGIN
+        VAR arr: [[Int]]
+        arr = NEW [[Int]](5)
+        VAR i: Int
+        i = 0
+        WHILE (i < 5)
+        BEGIN
+            arr[i] = NEW [Int](6)
+            VAR j: Int
+            j = 0
+            WHILE (j < 6)
+            BEGIN
+                arr[i][j] = i * j
+                j = j + 1
+            END
+            i = i + 1
+        END
+
+        i = 0
+        WHILE (i < 5)
+            BEGIN
+                VAR j: Int
+                j = 0
+                WHILE (j < 6)
+                BEGIN
+                    OUTPUT arr[i][j]
+                    j = j + 1
+                END
+                i = i + 1
+            END
+        RETURN 0
+    END
+END
